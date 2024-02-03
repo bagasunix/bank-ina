@@ -16,6 +16,13 @@ func EncodeError(_ context.Context, err error, w http.ResponseWriter) {
 
 	responseBuilder := responses.NewErrorBuilder()
 
+	if strings.Contains(err.Error(), errors.ERR_EMAIL) {
+		w.WriteHeader(http.StatusBadRequest)
+		responseBuilder.SetError(err)
+		json.NewEncoder(w).Encode(responseBuilder.Build())
+		return
+	}
+
 	if strings.Contains(err.Error(), errors.ERR_NOT_AUTHORIZED) {
 		w.WriteHeader(http.StatusUnauthorized)
 		responseBuilder.SetError(err)
