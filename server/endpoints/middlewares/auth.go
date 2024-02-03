@@ -12,10 +12,9 @@ import (
 )
 
 const (
-	authorizationHeaderKey             = "authorization"
-	authorizationTypeBearer            = "bearer"
-	authorizationPayloadKey            = "authorization_payload"
-	authorizationIntegrationPayloadKey = "authorization_payload_integration"
+	authorizationHeaderKey  = "authorization"
+	authorizationTypeBearer = "bearer"
+	authorizationPayloadKey = "authorization_payload"
 )
 
 func Authentication(logs *zap.Logger) endpoints.Middleware {
