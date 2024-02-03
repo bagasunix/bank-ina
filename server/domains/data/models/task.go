@@ -69,3 +69,7 @@ func (t *TaskBuilder) SetDescription(description string) {
 func (t *TaskBuilder) SetStatus(status string) {
 	t.status = status
 }
+
+func (Task) TableName() string {
+	return "tasks"
+}
