@@ -53,3 +53,6 @@ func (u *UserBuilder) SetEmail(email string) {
 func (u *UserBuilder) SetPassword(password string) {
 	u.password = password
 }
+func (User) TableName() string {
+	return "users"
+}
