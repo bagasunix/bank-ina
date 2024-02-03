@@ -26,7 +26,7 @@ func Run() {
 	db := InitDb(ctx, logger, configs)
 	Migrate(logger, db)
 	repositories := repositories.New(logger, db)
-	svc := InitService(logger, repositories)
+	svc := InitService(logger, configs, repositories)
 	eps := InitEndpoint(logger, svc)
 
 	httpHandler := InitHttpHandler(configs, logger, eps)
