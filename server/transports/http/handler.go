@@ -8,6 +8,7 @@ import (
 
 	"github.com/bagasunix/bank-ina/pkg/envs"
 	"github.com/bagasunix/bank-ina/server/endpoints"
+	"github.com/bagasunix/bank-ina/server/endpoints/middlewares"
 	"github.com/bagasunix/bank-ina/server/transports/http/handlers"
 )
 
@@ -15,6 +16,9 @@ func NewHttpHandler(configs *envs.Configs, loggers *zap.Logger, endpoints endpoi
 	gin.SetMode(configs.Env)
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.Use(middlewares.Secure())
+	r.Use(middlewares.CORSMiddleware())
+	r.Use(middlewares.RemoveTrailingSlash())
 
 	handlers.MakeUserHandler(endpoints.UserEndpoint, loggers, r.Group(configs.ApiVersion+"/user"))
 	handlers.MakeTaskHandler(endpoints.TaskEndpoint, loggers, r.Group(configs.ApiVersion+"/task"))
