@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"context"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -18,10 +19,18 @@ type loggingMiddleware struct {
 	next   domains.Service
 }
 
+// SignIn implements domains.Service.
+func (l *loggingMiddleware) SignIn(ctx context.Context, request *requests.Signin) (response *responses.ViewEntity[*responses.SignIn], err error) {
+	defer func(begin time.Time) {
+		l.logger.Info("BANK-INA", zap.String("request", string(request.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+	}(time.Now())
+	return l.next.SignIn(ctx, request)
+}
+
 // CreateTask implements domains.Service.
 func (l *loggingMiddleware) CreateTask(ctx *gin.Context, req *requests.CreateTask) (response *responses.EntityId, err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.CreateTask(ctx, req)
 }
@@ -29,7 +38,7 @@ func (l *loggingMiddleware) CreateTask(ctx *gin.Context, req *requests.CreateTas
 // CreateUser implements domains.Service.
 func (l *loggingMiddleware) CreateUser(ctx *gin.Context, req *requests.CreateUser) (response *responses.EntityId, err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.CreateUser(ctx, req)
 }
@@ -37,7 +46,7 @@ func (l *loggingMiddleware) CreateUser(ctx *gin.Context, req *requests.CreateUse
 // DeleteTask implements domains.Service.
 func (l *loggingMiddleware) DeleteTask(ctx *gin.Context, req *requests.EntityId) (response *responses.Empty, err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.DeleteTask(ctx, req)
 }
@@ -45,7 +54,7 @@ func (l *loggingMiddleware) DeleteTask(ctx *gin.Context, req *requests.EntityId)
 // DeleteUser implements domains.Service.
 func (l *loggingMiddleware) DeleteUser(ctx *gin.Context, req *requests.EntityId) (response *responses.Empty, err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.DeleteUser(ctx, req)
 }
@@ -53,7 +62,7 @@ func (l *loggingMiddleware) DeleteUser(ctx *gin.Context, req *requests.EntityId)
 // GetAllTask implements domains.Service.
 func (l *loggingMiddleware) GetAllTask(ctx *gin.Context) (response *responses.ListEntity[entities.Task], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.GetAllTask(ctx)
 }
@@ -61,7 +70,7 @@ func (l *loggingMiddleware) GetAllTask(ctx *gin.Context) (response *responses.Li
 // GetAllUser implements domains.Service.
 func (l *loggingMiddleware) GetAllUser(ctx *gin.Context) (response *responses.ListEntity[entities.User], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.GetAllUser(ctx)
 }
@@ -69,7 +78,7 @@ func (l *loggingMiddleware) GetAllUser(ctx *gin.Context) (response *responses.Li
 // UpdateTask implements domains.Service.
 func (l *loggingMiddleware) UpdateTask(ctx *gin.Context, req *requests.UpdateTask) (response *responses.ViewEntity[*entities.Task], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.UpdateTask(ctx, req)
 }
@@ -77,7 +86,7 @@ func (l *loggingMiddleware) UpdateTask(ctx *gin.Context, req *requests.UpdateTas
 // UpdateUser implements domains.Service.
 func (l *loggingMiddleware) UpdateUser(ctx *gin.Context, req *requests.UpdateUser) (response *responses.ViewEntity[*entities.User], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", ""), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.UpdateUser(ctx, req)
 }
@@ -85,7 +94,7 @@ func (l *loggingMiddleware) UpdateUser(ctx *gin.Context, req *requests.UpdateUse
 // ViewTask implements domains.Service.
 func (l *loggingMiddleware) ViewTask(ctx *gin.Context, req *requests.EntityId) (response *responses.ViewEntity[*entities.Task], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.ViewTask(ctx, req)
 }
@@ -93,7 +102,7 @@ func (l *loggingMiddleware) ViewTask(ctx *gin.Context, req *requests.EntityId) (
 // ViewUser implements domains.Service.
 func (l *loggingMiddleware) ViewUser(ctx *gin.Context, req *requests.EntityId) (response *responses.ViewEntity[*entities.User], err error) {
 	defer func(begin time.Time) {
-		l.logger.Info("MovieService", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
+		l.logger.Info("BANK-INA", zap.String("request", string(req.ToJSON())), zap.String("response", string(response.ToJSON())), zap.Error(err), zap.Duration("took", time.Since(begin)))
 	}(time.Now())
 	return l.next.ViewUser(ctx, req)
 }
