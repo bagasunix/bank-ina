@@ -18,24 +18,24 @@ const (
 type UserEndpoint struct {
 	CreateUserEndpoint Endpoint
 	ListUserEndpoint   Endpoint
-	UpdateMovieEnpoint Endpoint
+	UpdateUserEnpoint  Endpoint
 	ViewUserEndpoint   Endpoint
-	DeleteMovieEnpoint Endpoint
+	DeleteUserEnpoint  Endpoint
 }
 
 func NewUserEndpoint(s domains.Service, mdw map[string][]Middleware) UserEndpoint {
 	eps := UserEndpoint{}
 	eps.CreateUserEndpoint = makeCreateUserEndpoint(s)
 	eps.ListUserEndpoint = makeListUserEndpoint(s)
-	eps.UpdateMovieEnpoint = makeUpdateUserEndpoint(s)
+	eps.UpdateUserEnpoint = makeUpdateUserEndpoint(s)
 	eps.ViewUserEndpoint = makeViewUserEndpoint(s)
-	eps.DeleteMovieEnpoint = makeDeleteUserEndpoint(s)
+	eps.DeleteUserEnpoint = makeDeleteUserEndpoint(s)
 
 	SetEndpoint(CREATE_USER, &eps.CreateUserEndpoint, mdw)
 	SetEndpoint(LIST_USER, &eps.ListUserEndpoint, mdw)
-	SetEndpoint(UPDATE_USER, &eps.UpdateMovieEnpoint, mdw)
+	SetEndpoint(UPDATE_USER, &eps.UpdateUserEnpoint, mdw)
 	SetEndpoint(View_USER, &eps.ViewUserEndpoint, mdw)
-	SetEndpoint(DELETE_USER, &eps.DeleteMovieEnpoint, mdw)
+	SetEndpoint(DELETE_USER, &eps.DeleteUserEnpoint, mdw)
 
 	return eps
 }
