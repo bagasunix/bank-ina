@@ -5,6 +5,7 @@ import "github.com/bagasunix/bank-ina/server/domains"
 type Endpoints struct {
 	UserEndpoint UserEndpoint
 	TaskEndpoint TaskEndpoint
+	AuthEndpoint AuthEndpoint
 }
 
 // Builder EndpointsBuilder Builder Object for Endpoints
@@ -24,6 +25,7 @@ func (b *Builder) Build() Endpoints {
 	eps := new(Endpoints)
 	eps.UserEndpoint = NewUserEndpoint(b.service, b.middlewares)
 	eps.TaskEndpoint = NewTaskEndpoint(b.service, b.middlewares)
+	eps.AuthEndpoint = NewAuthEndpoint(b.service, b.middlewares)
 	return *eps
 }
 
