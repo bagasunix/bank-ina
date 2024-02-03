@@ -21,7 +21,7 @@ type Configs struct {
 	MaxIdleConns    string
 	MaxOpenConns    string
 	ConnMaxLifetime string
-	JwtKey          string
+	JWTKey          string
 }
 
 var env = map[string]map[string]string{
@@ -74,8 +74,8 @@ var env = map[string]map[string]string{
 		"DefaultValue": "5m",
 	},
 	"JWT_KEY": {
-		"Key":          "JwtKey",
-		"DefaultValue": "localhost",
+		"Key":          "JWTKey",
+		"DefaultValue": "BagasUnix",
 	},
 }
 
