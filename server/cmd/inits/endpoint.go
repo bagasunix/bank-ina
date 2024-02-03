@@ -39,5 +39,4 @@ func addDefaultEndpointMiddleware(logger *zap.Logger, mw map[string][]endpoints.
 	mw[endpoints.DELETE_TASK] = middlewaresWithAuthentication(logger, endpoints.DELETE_TASK)
 	mw[endpoints.View_TASK] = middlewaresWithAuthentication(logger, endpoints.View_TASK)
 	mw[endpoints.LIST_TASK] = middlewaresWithAuthentication(logger, endpoints.LIST_TASK)
-
 }
