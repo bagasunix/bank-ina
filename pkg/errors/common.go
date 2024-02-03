@@ -17,6 +17,7 @@ var (
 	ERR_INVALID_KEY     = "invalid"
 	ERR_NOT_AUTHORIZED  = "unauthorized"
 	ERR_TOKEN           = "token"
+	ERR_EMAIL           = "email"
 )
 
 func CustomError(err string) error {
