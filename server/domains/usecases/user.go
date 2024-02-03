@@ -92,7 +92,6 @@ func (u *user) GetAllUser(ctx *gin.Context) (response *responses.ListEntity[enti
 		userBuild.SetID(strconv.Itoa(i.ID))
 		userBuild.SetName(i.Name)
 		userBuild.SetEmail(i.Email)
-		userBuild.SetPassword(i.Password)
 		userBuild.SetCreatedAt(i.CreatedAt)
 		userBuild.SetUpdatedAt(i.UpdatedAt)
 		users = append(users, *userBuild.Build())
@@ -118,6 +117,7 @@ func (u *user) UpdateUser(ctx *gin.Context, req *requests.UpdateUser) (response 
 	mBuild := models.NewUserBuilder()
 	mBuild.SetId(ids)
 	mBuild.SetName(req.Name)
+	mBuild.SetEmail(req.Email)
 	mBuild.SetPassword(req.Password)
 
 	if err = u.repo.GetUser().UpdateUser(ctx, req.ID, mBuild.Build()); err != nil {
@@ -134,7 +134,6 @@ func (u *user) UpdateUser(ctx *gin.Context, req *requests.UpdateUser) (response 
 	entitiesUser.SetID(strconv.Itoa(resultUser.Value.ID))
 	entitiesUser.SetName(resultUser.Value.Name)
 	entitiesUser.SetEmail(resultUser.Value.Email)
-	entitiesUser.SetPassword(resultUser.Value.Password)
 	entitiesUser.SetCreatedAt(resultUser.Value.CreatedAt)
 	entitiesUser.SetUpdatedAt(resultUser.Value.UpdatedAt)
 
@@ -156,7 +155,6 @@ func (u *user) ViewUser(ctx *gin.Context, req *requests.EntityId) (response *res
 	userBuild.SetID(strconv.Itoa(mBuild.Value.ID))
 	userBuild.SetName(mBuild.Value.Name)
 	userBuild.SetEmail(mBuild.Value.Email)
-	userBuild.SetPassword(mBuild.Value.Password)
 	userBuild.SetCreatedAt(mBuild.Value.CreatedAt)
 	userBuild.SetUpdatedAt(mBuild.Value.UpdatedAt)
 
