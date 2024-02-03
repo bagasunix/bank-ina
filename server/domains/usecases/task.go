@@ -28,6 +28,7 @@ type task struct {
 
 // CreateTask implements Task.
 func (t *task) CreateTask(ctx *gin.Context, req *requests.CreateTask) (response *responses.EntityId, err error) {
+	authUser := ctx.Value("authorization_payload").(*entities.User)
 	responseBuilder := responses.NewEntityIdBuilder()
 	if req.Validate() != nil {
 		return responseBuilder.Build(), req.Validate()
@@ -38,10 +39,12 @@ func (t *task) CreateTask(ctx *gin.Context, req *requests.CreateTask) (response 
 		return responseBuilder.Build(), errors.CustomError(errors.ERR_DUPLICATE_KEY)
 	}
 
+	userID, _ := strconv.Atoi(authUser.ID)
 	mBuild := models.Task{
 		Title:       req.Title,
 		Description: req.Description,
 		Status:      req.Status,
+		UserID:      userID,
 	}
 
 	if err := t.repo.GetTask().CreateTask(ctx, &mBuild); err != nil {
@@ -102,23 +105,26 @@ func (t *task) GetAllTask(ctx *gin.Context) (response *responses.ListEntity[enti
 
 // UpdateTask implements Task.
 func (t *task) UpdateTask(ctx *gin.Context, req *requests.UpdateTask) (response *responses.ViewEntity[*entities.Task], err error) {
+	authUser := ctx.Value("authorization_payload").(*entities.User)
 	responseBuilder := responses.NewViewEntityBuilder[*entities.Task]()
 	if req.Validate() != nil {
 		return responseBuilder.Build(), req.Validate()
 	}
 
-	checkName := t.repo.GetTask().GetByName(ctx, req.Title)
-	if len(checkName.Value) != 0 {
-		return responseBuilder.Build(), errors.ErrDataAlready(req.Title)
-	}
+	// checkName := t.repo.GetTask().GetByName(ctx, req.Title)
+	// if len(checkName.Value) != 0 {
+	// 	return responseBuilder.Build(), errors.ErrDataAlready(req.Title)
+	// }
 
 	ids, _ := strconv.Atoi(req.ID)
+	userID, _ := strconv.Atoi(authUser.ID)
 
 	mBuild := models.NewTaskBuilder()
 	mBuild.SetId(ids)
 	mBuild.SetTitle(req.Title)
 	mBuild.SetDescription(req.Description)
 	mBuild.SetStatus(req.Status)
+	mBuild.SetUserID(userID)
 
 	if err = t.repo.GetTask().UpdateTask(ctx, req.ID, mBuild.Build()); err != nil {
 		return responseBuilder.Build(), err
