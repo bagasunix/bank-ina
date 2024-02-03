@@ -12,7 +12,7 @@ type CreateTask struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Status      string `json:"status"`
-	UserID      string `json:"user_id"`
+	// UserID      string `json:"user_id"`
 }
 
 // Builder Object for CreateTask
@@ -20,7 +20,7 @@ type CreateTaskBuilder struct {
 	title       string
 	description string
 	status      string
-	userID      string
+	// userID      string
 }
 
 // Constructor for CreateTaskBuilder
@@ -35,7 +35,7 @@ func (b *CreateTaskBuilder) Build() *CreateTask {
 	o.Title = b.title
 	o.Description = b.description
 	o.Status = b.status
-	o.UserID = b.userID
+	// o.UserID = b.userID
 	return o
 }
 
@@ -55,9 +55,9 @@ func (c *CreateTaskBuilder) SetStatus(status string) {
 }
 
 // Setter method for the field userID of type string in the object CreateTaskBuilder
-func (c *CreateTaskBuilder) SetUserID(userID string) {
-	c.userID = userID
-}
+// func (c *CreateTaskBuilder) SetUserID(userID string) {
+// 	c.userID = userID
+// }
 
 func (s *CreateTask) ToJSON() []byte {
 	j, err := json.Marshal(s)
@@ -68,7 +68,7 @@ func (s *CreateTask) ToJSON() []byte {
 func (c CreateTask) Validate() error {
 	return validation.ValidateStruct(&c,
 		validation.Field(&c.Title, validation.Required.Error("Nama harus diisi")),
-		validation.Field(&c.UserID, validation.Required.Error("User ID harus diisi")),
+		// validation.Field(&c.UserID, validation.Required.Error("User ID harus diisi")),
 		validation.Field(&c.Status, validation.Required.Error("Status harus diisi")),
 	)
 }
