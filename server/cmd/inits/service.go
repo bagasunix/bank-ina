@@ -3,13 +3,14 @@ package inits
 import (
 	"go.uber.org/zap"
 
+	"github.com/bagasunix/bank-ina/pkg/envs"
 	"github.com/bagasunix/bank-ina/server/domains"
 	"github.com/bagasunix/bank-ina/server/domains/data/repositories"
 	"github.com/bagasunix/bank-ina/server/domains/middlewares"
 )
 
-func InitService(logger *zap.Logger, repo repositories.Repositories) domains.Service {
-	serviceBuilder := domains.NewServiceBuilder(logger, repo)
+func InitService(logger *zap.Logger, conf *envs.Configs, repo repositories.Repositories) domains.Service {
+	serviceBuilder := domains.NewServiceBuilder(logger, conf.JWTKey, repo)
 	serviceBuilder.SetMiddlewares(getServiceMiddleware(logger))
 	return serviceBuilder.Build()
 }
