@@ -1,19 +1,17 @@
 package entities
 
 type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 	BaseEntity
 }
 
 // Builder Object for User
 type UserBuilder struct {
-	id       string
-	name     string
-	email    string
-	password string
+	id    string
+	name  string
+	email string
 	BaseEntityBuilder
 }
 
@@ -29,7 +27,6 @@ func (b *UserBuilder) Build() *User {
 	o.ID = b.id
 	o.Name = b.name
 	o.Email = b.email
-	o.Password = b.password
 	o.BaseEntity = *b.BaseEntityBuilder.Build()
 	return o
 }
@@ -47,9 +44,4 @@ func (u *UserBuilder) SetName(name string) {
 // Setter method for the field email of type string in the object UserBuilder
 func (u *UserBuilder) SetEmail(email string) {
 	u.email = email
-}
-
-// Setter method for the field password of type string in the object UserBuilder
-func (u *UserBuilder) SetPassword(password string) {
-	u.password = password
 }
