@@ -20,9 +20,9 @@ func NewHttpHandler(configs *envs.Configs, loggers *zap.Logger, endpoints endpoi
 	r.Use(middlewares.CORSMiddleware())
 	r.Use(middlewares.RemoveTrailingSlash())
 
-	handlers.MakeUserHandler(endpoints.UserEndpoint, loggers, r.Group(configs.ApiVersion+"/user"))
-	handlers.MakeTaskHandler(endpoints.TaskEndpoint, loggers, r.Group(configs.ApiVersion+"/task"))
-	handlers.MakeAuthHandler(endpoints.AuthEndpoint, loggers, r.Group(configs.ApiVersion+"/"))
+	handlers.MakeUserHandler(endpoints.UserEndpoint, loggers, r.Group("/user"))
+	handlers.MakeTaskHandler(endpoints.TaskEndpoint, loggers, r.Group("/task"))
+	handlers.MakeAuthHandler(endpoints.AuthEndpoint, loggers, r.Group("/"))
 
 	return r
 }
